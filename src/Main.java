@@ -11,7 +11,7 @@ public class Main {
 
         public Board() {
             //List balls = new ArrayList<>(); - создает новый экземпляр класса, а не инициализирует старый.
-            
+
             //Правильная запись
             balls = new ArrayList<>();
 

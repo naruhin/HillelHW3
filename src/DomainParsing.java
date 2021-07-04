@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Stream;
 
-//Вывести топ 10 доменов которые встречаются чаще всего.
+//Вывести топ 10 доменов которые встречаются чаще всего.ц
 public class DomainParsing {
 
     public static String stringCutter(String str){
@@ -13,8 +13,8 @@ public class DomainParsing {
         //str = str.replace ("m.", "");
 
         //deleting all after "/"
-        int urlIndex = str.indexOf("/");
-        str = urlIndex != -1 ? str.substring(0, urlIndex) : str;
+        int slashIndex = str.indexOf("/");
+        str = slashIndex != -1 ? str.substring(0, slashIndex) : str;
 
         return str;
     }
@@ -29,24 +29,20 @@ public class DomainParsing {
         return result;
     }
 
-    public static void printTopOf(int lastInTop, Map<String,Integer> map){
-        System.out.println("TOP-" + lastInTop + " URLS");
+    public static void printTopOf(int topOf, Map<String,Integer> map){
+        System.out.println("TOP-" + topOf + " URLS");
         int index = 0;
-
         for (Map.Entry url : map.entrySet() ) {
-            if(index < lastInTop){
+            if(index < topOf){
                 System.out.println(index + 1 + ". " + url.getKey() + " - " + url.getValue() + " times.");
-                index++;
             }
-            else{ break; }
+            index++;
         }
     }
 
-    public static void main(String[] args) {
-        Map<String,Integer> urls = new HashMap<>();
 
-
-        //READING FROM FILE STRING BY STRING. AFTER STRING PROCESSING IT'S ADDS TO MAP
+    //READING FROM FILE STRING BY STRING. AFTER STRING PROCESSING IT'S ADDS TO MAP
+    public static void readFromFileToMap(Map<String,Integer> map) {
         try {
             File file = new File("urls.txt");
             FileReader fr = new FileReader(file);
@@ -56,20 +52,24 @@ public class DomainParsing {
             while (line != null) {
                 line = stringCutter(line);
 
-                if(!urls.containsKey(line))
-                    urls.put(line,1);
+                if(!map.containsKey(line))
+                    map.put(line,1);
                 else
-                    urls.put(line, urls.get(line) + 1);
+                    map.put(line, map.get(line) + 1);
 
                 line = reader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        //DESCENDING SORT
+
+    public static void main(String[] args) {
+        Map<String,Integer> urls = new HashMap<>();
+
+        readFromFileToMap(urls);
         urls = sortByValue(urls);
-
         printTopOf(10,urls);
     }
 }
