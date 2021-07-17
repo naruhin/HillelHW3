@@ -3,7 +3,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class DomainParsingService {
+public class DomainService {
 
     public static Map<String, Integer> sortByValue(Map<String, Integer> map) {
         Map<String, Integer> result = new LinkedHashMap<>();
